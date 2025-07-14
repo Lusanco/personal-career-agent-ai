@@ -1,11 +1,9 @@
 # Imports
 import os
-import json
 import gradio as gr
 from typing import cast
 from dotenv import load_dotenv
 from openai import OpenAI
-from pypdf import PdfReader
 
 # OpenAI types
 from openai.types.chat import ChatCompletionMessageParam
@@ -32,9 +30,6 @@ notifications = []
 
 # Read PDF
 try:
-    # Do the following for system_prompt, summary, linkedin,
-    # and all materials in the luis-santiago directory
-
     # System Prompt
     with open("./luis-santiago/system_prompt.md", "r", encoding="utf-8") as file:
         system_prompt = file.read()
@@ -87,9 +82,7 @@ Simulated Interview:
 """
 
 except FileNotFoundError:
-    print(
-        "Warning: './other/linkedin.pdf' or './other/summary.txt' not found. Using a default system prompt."
-    )
+    print("File Not Found. Using default system prompt.")
     name = "AI Assistant"
     system_prompt = "You are a helpful AI assistant. Since your personal context is not available, please inform the user and answer their questions generally."
 
