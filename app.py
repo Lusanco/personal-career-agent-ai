@@ -10,9 +10,6 @@ from pypdf import PdfReader
 # OpenAI types
 from openai.types.chat import ChatCompletionMessageParam
 
-# Markdown output display
-from IPython.display import Markdown, display
-
 
 # Cast to String
 def env_to_str(env: str) -> str:
@@ -33,124 +30,16 @@ gemini = OpenAI(api_key=gemini_api_key, base_url=gemini_base_url)
 notifications = []
 
 
-# Push Function
-def push(message):
-    """
-    Prints a message and adds it to the global notifications list.
-    """
-    print(f"Notification: {message}")
-    notifications.append(message)
-
-
-# Example of the new push function
-push("New Notification!")
-# Notebook Printing
-notifications
-# Tool for the LLM's
-
-
-def record_user_details(email, name="Name not provided", notes="not provided"):
-    """
-    Records user interest and saves a notification to a list.
-    """
-    push(f"Recording interest from {name} with email {email} and notes {notes}")
-    return {"recorded": "ok"}
-
-
-# Tool for the LLM's
-
-
-def record_unknown_question(question):
-    """
-    Records a question that could not be answered and saves a notification to a list.
-    """
-    push(f"Recording an unanswered question: {question}")
-    return {"recorded": "ok"}
-
-
-# JSON definitions for the tool
-record_user_details_json = {
-    "name": "record_user_details",
-    "description": "Use this tool to record that a user is interested in being in touch and provided an email address",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "email": {
-                "type": "string",
-                "description": "The email address of this user",
-            },
-            "name": {
-                "type": "string",
-                "description": "The user's name, if they provided it",
-            },
-            "notes": {
-                "type": "string",
-                "description": "Any additional information about the conversation that's worth recording to give context",
-            },
-        },
-        "required": ["email"],
-        "additionalProperties": False,
-    },
-}
-# JSON definitions for the tool
-record_unknown_question_json = {
-    "name": "record_unknown_question",
-    "description": "Always use this tool to record any question that couldn't be answered as you didn't know the answer",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "question": {
-                "type": "string",
-                "description": "The question that couldn't be answered",
-            }
-        },
-        "required": ["question"],
-        "additionalProperties": False,
-    },
-}
-# Tools for the tools call
-tools = [
-    {"type": "function", "function": record_user_details_json},
-    {"type": "function", "function": record_unknown_question_json},
-]
-# Notebook Printing
-tools
-
-
-# This function can take a list of tool calls, and run them.
-def handle_tool_calls(tool_calls):
-    results = []
-    for tool_call in tool_calls:
-        tool_name = tool_call.function.name
-        arguments = json.loads(tool_call.function.arguments)
-        print(f"Tool called: {tool_name}", flush=True)
-
-        # This elegant way of calling the function
-        tool = globals().get(tool_name)
-        result = tool(**arguments) if tool else {}
-        results.append(
-            {
-                "role": "tool",
-                "content": json.dumps(result),
-                "tool_call_id": tool_call.id,
-            }
-        )
-    return results
-
-
 # Read PDF
 try:
-    reader = PdfReader("./other/linkedin.pdf")
-    linkedin = ""
-    for page in reader.pages:
-        text = page.extract_text()
-        if text:
-            linkedin += text
+    # Do the following for system_prompt, summary, linkedin,
+    # and all materials in the luis-santiago directory
 
+    # System Prompt
+    with open("./luis-santiago/system_prompt.md", "r", encoding="utf-8") as file:
+        system_prompt = file.read()
     with open("./other/summary.txt", "r", encoding="utf-8") as f:
         summary = f.read()
-
-    name = "Luis Santiago"
 
     system_prompt = f"""You are acting as {name}. You are answering questions on {name}'s website, \
     particularly questions related to {name}'s career, background, skills and experience. \
@@ -203,4 +92,3 @@ def chat(message, history):
 
 # Launch the Gradio Interface
 gr.ChatInterface(chat, type="messages").launch()
-notifications
