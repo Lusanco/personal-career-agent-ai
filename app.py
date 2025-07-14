@@ -51,6 +51,10 @@ try:
     with open("./luis-santiago/linkedin.md", "r", encoding="utf-8") as file:
         linkedin = file.read()
 
+    # Simulated Interview
+    with open("./luis-santiago/simulated_interview.md", "r", encoding="utf-8") as file:
+        simulated_interview = file.read()
+
     with open("./other/summary.txt", "r", encoding="utf-8") as f:
         summary = f.read()
 
