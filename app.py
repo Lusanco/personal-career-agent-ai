@@ -55,8 +55,13 @@ try:
     with open("./luis-santiago/simulated_interview.md", "r", encoding="utf-8") as file:
         simulated_interview = file.read()
 
-    with open("./other/summary.txt", "r", encoding="utf-8") as f:
-        summary = f.read()
+    # Refined Simulated Interview
+    with open(
+        "./luis-santiago/refined_simulated_interview.md", "r", encoding="utf-8"
+    ) as file:
+        refined_simulated_interview = file.read()
+
+        # summary = f.read()
 
     system_prompt = f"""You are acting as {name}. You are answering questions on {name}'s website, \
     particularly questions related to {name}'s career, background, skills and experience. \
