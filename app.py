@@ -47,7 +47,10 @@ try:
     with open("./luis-santiago/refined_resume.md", "r", encoding="utf-8") as file:
         refined_resume = file.read()
 
-    #
+    # LinkedIn Details
+    with open("./luis-santiago/linkedin.md", "r", encoding="utf-8") as file:
+        linkedin = file.read()
+
     with open("./other/summary.txt", "r", encoding="utf-8") as f:
         summary = f.read()
 
