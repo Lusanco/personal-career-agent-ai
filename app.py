@@ -43,6 +43,11 @@ try:
     with open("./luis-santiago/resume.md", "r", encoding="utf-8") as file:
         resume = file.read()
 
+    # Refined Resume
+    with open("./luis-santiago/refined_resume.md", "r", encoding="utf-8") as file:
+        refined_resume = file.read()
+
+    #
     with open("./other/summary.txt", "r", encoding="utf-8") as f:
         summary = f.read()
 
