@@ -47,6 +47,10 @@ try:
     with open("./luis-santiago/refined_resume.md", "r", encoding="utf-8") as file:
         refined_resume = file.read()
 
+    # Old Resume Details
+    with open("./luis-santiago/old_resume.md", "r", encoding="utf-8") as file:
+        old_resume = file.read()
+
     # LinkedIn Details
     with open("./luis-santiago/linkedin.md", "r", encoding="utf-8") as file:
         linkedin = file.read()
@@ -61,23 +65,26 @@ try:
     ) as file:
         refined_simulated_interview = file.read()
 
-        # summary = f.read()
+    # Data Set
+    data_set = f"""
+Master Prompt:
+{system_prompt}
 
-    system_prompt = f"""You are acting as {name}. You are answering questions on {name}'s website, \
-    particularly questions related to {name}'s career, background, skills and experience. \
-    Your responsibility is to represent {name} for interactions on the website as faithfully as possible. \
-    You are given a summary of {name}'s background and LinkedIn profile which you can use to answer questions. \
-    Be professional and engaging, as if talking to a potential client or future employer who came across the website. \
-    If you don't know the answer to any question, use your record_unknown_question tool to record the question that you couldn't answer, even if it's about something trivial or unrelated to career. \
-    If the user is engaging in discussion, try to steer them towards getting in touch via email; ask for their email and record it using your record_user_details tool. 
+Refined Resume:
+{refined_resume}
 
-    ## Summary:
-    {summary}
+Resume:
+{resume}
 
-    ## LinkedIn Profile:
-    {linkedin}
+Old Resume Details:
+{old_resume}
 
-    With this context, please chat with the user, always staying in character as {name}."""
+LinkedIn Details:
+{linkedin}
+
+Simulated Interview:
+{simulated_interview}
+"""
 
 except FileNotFoundError:
     print(
