@@ -38,6 +38,11 @@ try:
     # System Prompt
     with open("./luis-santiago/system_prompt.md", "r", encoding="utf-8") as file:
         system_prompt = file.read()
+
+    # Resume
+    with open("./luis-santiago/resume.md", "r", encoding="utf-8") as file:
+        resume = file.read()
+
     with open("./other/summary.txt", "r", encoding="utf-8") as f:
         summary = f.read()
 
