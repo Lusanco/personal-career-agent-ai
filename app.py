@@ -31,8 +31,8 @@ notifications = []
 # Read PDF
 try:
     # System Prompt
-    with open("./luis-santiago/system_prompt.md", "r", encoding="utf-8") as file:
-        system_prompt = file.read()
+    with open("./luis-santiago/master_prompt.md", "r", encoding="utf-8") as file:
+        master_prompt = file.read()
 
     # Resume
     with open("./luis-santiago/resume.md", "r", encoding="utf-8") as file:
@@ -61,15 +61,12 @@ try:
         refined_simulated_interview = file.read()
 
     # Data Set
-    data_set = f"""
+    system_prompt = f"""
 Master Prompt:
-{system_prompt}
+{master_prompt}
 
 Refined Resume:
 {refined_resume}
-
-Resume:
-{resume}
 
 Old Resume Details:
 {old_resume}
@@ -77,14 +74,14 @@ Old Resume Details:
 LinkedIn Details:
 {linkedin}
 
-Simulated Interview:
-{simulated_interview}
+Refined Simulated Interview:
+{refined_simulated_interview}
 """
 
 except FileNotFoundError:
     print("File Not Found. Using default system prompt.")
     name = "AI Assistant"
-    system_prompt = "You are a helpful AI assistant. Since your personal context is not available, please inform the user and answer their questions generally."
+    system_prompt = "You are a helpful AI assistant. Since your personal context is not available, please inform the user and refrain from answering."
 
 
 # Chat Function
@@ -94,21 +91,10 @@ def chat(message, history):
         + history
         + [{"role": "user", "content": message}]
     )
-    done = False
-    while not done:
-        response = gemini.chat.completions.create(
-            model=model_gemini_flash, messages=messages, tools=tools
-        )
-        finish_reason = response.choices[0].finish_reason
 
-        if finish_reason == "tool_calls":
-            message = response.choices[0].message
-            tool_calls = message.tool_calls
-            results = handle_tool_calls(tool_calls)
-            messages.append(message)
-            messages.extend(results)
-        else:
-            done = True
+    response = gemini.chat.completions.create(
+        model=model_gemini_flash, messages=messages
+    )
     return response.choices[0].message.content
 
 
