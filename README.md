@@ -6,7 +6,7 @@ A custom AI chatbot that represents **me** in a professional context. It is desi
 
 ## 🔗 Live App
 
-👉 [Try it here](https://lasc1026-personal-career-agent-ai.hf.space/)
+👉 [Try it here](https://lasc1026-personal-career-agent-ai.hf.space/) (Might take a while for HuggingSpace to load the instance if inactive. Email me at lasc1026@gmail.com if you need me to start the gradio space manually.)
 
 ## 💡 Features
 
